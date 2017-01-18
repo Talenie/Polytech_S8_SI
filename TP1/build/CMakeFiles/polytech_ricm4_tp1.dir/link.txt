@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/polytech_ricm4_tp1.dir/src/main.cpp.o CMakeFiles/polytech_ricm4_tp1.dir/src/shader.cpp.o  -o polytech_ricm4_tp1 -rdynamic external/build/libGLFW_276.a external/build/libGLEW_190.a -lGLU -lGL -lGL -lGLU -lXrandr -lXext -lX11 -lrt -ldl 
