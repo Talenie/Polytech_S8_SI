@@ -1,7 +1,0 @@
-/home/alicia/Cours/S8/SI/TP3D/TP1/build/CMakeFiles/edit_cache.dir
-/home/alicia/Cours/S8/SI/TP3D/TP1/build/CMakeFiles/rebuild_cache.dir
-/home/alicia/Cours/S8/SI/TP3D/TP1/build/CMakeFiles/polytech_ricm4_tp1.dir
-/home/alicia/Cours/S8/SI/TP3D/TP1/build/external/build/CMakeFiles/edit_cache.dir
-/home/alicia/Cours/S8/SI/TP3D/TP1/build/external/build/CMakeFiles/rebuild_cache.dir
-/home/alicia/Cours/S8/SI/TP3D/TP1/build/external/build/CMakeFiles/GLEW_190.dir
-/home/alicia/Cours/S8/SI/TP3D/TP1/build/external/build/CMakeFiles/GLFW_276.dir
