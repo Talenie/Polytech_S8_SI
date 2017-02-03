@@ -85,6 +85,7 @@ int main() {
 	glEnable(GL_DEPTH_TEST);
 
 	// Activation du culling
+	//glFrontFace(GL_CW);
 	glEnable(GL_CULL_FACE);
 
 
@@ -102,98 +103,86 @@ int main() {
 
 	// Definition d'un tableau de vecteurs
 	vector<vec3> vertices;
+	vertices.push_back(vec3(-1, -1, 1));
+	vertices.push_back(vec3(1, -1, 1));
+	vertices.push_back(vec3(1, 1, 1));
+	vertices.push_back(vec3(-1, 1, 1));
 	vertices.push_back(vec3(-1, -1, -1));
-	vertices.push_back(vec3( 1,  1, -1));
-	vertices.push_back(vec3( 1, -1, -1));
-	vertices.push_back(vec3(-1, -1, -1));
-	vertices.push_back(vec3(-1,  1, -1));
-	vertices.push_back(vec3( 1,  1, -1));
-
-	vertices.push_back(vec3(-1, -1, -1));
-	vertices.push_back(vec3(-1,  1,  1));
-	vertices.push_back(vec3(-1,  1, -1));
-	vertices.push_back(vec3(-1, -1, -1));
-	vertices.push_back(vec3(-1, -1,  1));
-	vertices.push_back(vec3(-1,  1,  1));
-
-	vertices.push_back(vec3(-1, -1, -1));
-	vertices.push_back(vec3( 1, -1,  1));
-	vertices.push_back(vec3(-1, -1,  1));
-	vertices.push_back(vec3(-1, -1, -1));
-	vertices.push_back(vec3( 1, -1, -1));
-	vertices.push_back(vec3( 1, -1,  1));
-
-	vertices.push_back(vec3( 1,  1,  1));
-	vertices.push_back(vec3(-1,  1,  1));
-	vertices.push_back(vec3(-1, -1,  1));
-	vertices.push_back(vec3( 1,  1,  1));
-	vertices.push_back(vec3(-1, -1,  1));
-	vertices.push_back(vec3( 1, -1,  1));
-
-	vertices.push_back(vec3( 1,  1,  1));
-	vertices.push_back(vec3( 1, -1,  1));
-	vertices.push_back(vec3( 1, -1, -1));
-	vertices.push_back(vec3( 1,  1,  1));
-	vertices.push_back(vec3( 1, -1, -1));
-	vertices.push_back(vec3( 1,  1, -1));
-
-	vertices.push_back(vec3( 1,  1,  1));
-	vertices.push_back(vec3( 1,  1, -1));
-	vertices.push_back(vec3(-1,  1, -1));
-	vertices.push_back(vec3( 1,  1,  1));
-	vertices.push_back(vec3(-1,  1, -1));
-	vertices.push_back(vec3(-1,  1,  1));
+	vertices.push_back(vec3(1, -1, -1));
+	vertices.push_back(vec3(1, 1, -1));
+	vertices.push_back(vec3(-1, 1, -1));
 	
 	// Définition d'un tableau de couleurs
 	
 	vector<vec3> colors;
 	colors.push_back(vec3(26./255., 188./255., 156./255.));
-	colors.push_back(vec3(26./255., 188./255., 156./255.));
-	colors.push_back(vec3(26./255., 188./255., 156./255.));
-	colors.push_back(vec3(26./255., 188./255., 156./255.));
-	colors.push_back(vec3(26./255., 188./255., 156./255.));
-	colors.push_back(vec3(26./255., 188./255., 156./255.));
 	
-	
-	colors.push_back(vec3(22./255., 160./255., 133./255.));
-	colors.push_back(vec3(22./255., 160./255., 133./255.));
-	colors.push_back(vec3(22./255., 160./255., 133./255.));
-	colors.push_back(vec3(22./255., 160./255., 133./255.));
-	colors.push_back(vec3(22./255., 160./255., 133./255.));
 	colors.push_back(vec3(22./255., 160./255., 133./255.));
 	
 	colors.push_back(vec3(46./255., 204./255., 113./255.));
-	colors.push_back(vec3(46./255., 204./255., 113./255.));
-	colors.push_back(vec3(46./255., 204./255., 113./255.));
-	colors.push_back(vec3(46./255., 204./255., 113./255.));
-	colors.push_back(vec3(46./255., 204./255., 113./255.));
-	colors.push_back(vec3(46./255., 204./255., 113./255.));
 	
-	colors.push_back(vec3(39./255., 174./255., 96./255.));
-	colors.push_back(vec3(39./255., 174./255., 96./255.));
-	colors.push_back(vec3(39./255., 174./255., 96./255.));
-	colors.push_back(vec3(39./255., 174./255., 96./255.));
-	colors.push_back(vec3(39./255., 174./255., 96./255.));
 	colors.push_back(vec3(39./255., 174./255., 96./255.));
 	
 	colors.push_back(vec3(52./255., 152./255., 219./255.));
-	colors.push_back(vec3(52./255., 152./255., 219./255.));
-	colors.push_back(vec3(52./255., 152./255., 219./255.));
-	colors.push_back(vec3(52./255., 152./255., 219./255.));
-	colors.push_back(vec3(52./255., 152./255., 219./255.));
-	colors.push_back(vec3(52./255., 152./255., 219./255.));
 	
 	colors.push_back(vec3(41./255., 128./255., 185./255.));
-	colors.push_back(vec3(41./255., 128./255., 185./255.));
-	colors.push_back(vec3(41./255., 128./255., 185./255.));
-	colors.push_back(vec3(41./255., 128./255., 185./255.));
-	colors.push_back(vec3(41./255., 128./255., 185./255.));
-	colors.push_back(vec3(41./255., 128./255., 185./255.));
+	
+	colors.push_back(vec3(236./255., 240./255., 241./255.));
+	
+	colors.push_back(vec3(189./255., 195./255., 199./255.));
+	
 	
 	// Définition d'un array d'indices (choix des sommets)
 	
 	vector<uint> indices;
 	
+	indices.push_back(0);
+	indices.push_back(1);
+	indices.push_back(2);
+	
+	indices.push_back(0);
+	indices.push_back(2);
+	indices.push_back(3);
+	
+	indices.push_back(4);
+	indices.push_back(0);
+	indices.push_back(3);
+	
+	indices.push_back(4);
+	indices.push_back(3);
+	indices.push_back(7);
+	
+	indices.push_back(4);
+	indices.push_back(1);
+	indices.push_back(0);
+	
+	indices.push_back(4);
+	indices.push_back(5);
+	indices.push_back(1);
+	
+	indices.push_back(1);
+	indices.push_back(5);
+	indices.push_back(2);
+	
+	indices.push_back(2);
+	indices.push_back(5);
+	indices.push_back(6);
+	
+	indices.push_back(5);
+	indices.push_back(4);
+	indices.push_back(7);
+	
+	indices.push_back(7);
+	indices.push_back(6);	
+	indices.push_back(5);
+	
+	indices.push_back(3);	
+	indices.push_back(2);	
+	indices.push_back(7);	
+
+	indices.push_back(7);	
+	indices.push_back(2);	
+	indices.push_back(6);	
 
   
 	// Creation d'un VAO (c'est l'objet qui encapsule les VBOs et qu'on va manipuler)
@@ -249,7 +238,12 @@ int main() {
 	// Todo 2 : Creation d'un nouveau buffer pour les indices des triangles
 	//==================================================
 
-
+	GLuint indiceBufferID;
+	glGenBuffers(1, &indiceBufferID);
+	
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indiceBufferID);
+	
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size()*sizeof(uint), indices.data(), GL_STATIC_DRAW);
 
 	//==================================================
 	// Todo 3 : Creation des buffers avec le chargement d'un maillage
@@ -339,7 +333,7 @@ int main() {
 
 	// on dessine le contenu de tous les VBOs (buffers) associés à ce VAO
 	// i.e: positions et couleurs
-	glDrawArrays(GL_TRIANGLES, 0, vertices.size()); 
+	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0); 
 
 	glBindVertexArray(0); // On désactive le VAO  
 
@@ -368,12 +362,13 @@ int main() {
 	// Liberation des buffers
 	glDeleteBuffers(1, &vaoID);
 	glDeleteBuffers(1, &vertexBufferID);
-	glDeleteBuffers(1, &colorBufferID);
 
   //==================================================
   // Todo : Libérer TOUT les buffers que vous avez cree
   //==================================================
     
+	glDeleteBuffers(1, &colorBufferID);
+	glDeleteBuffers(1, &indiceBufferID);
 
     
 
