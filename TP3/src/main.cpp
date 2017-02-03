@@ -314,7 +314,7 @@ int main() {
 
 
 
-w
+
 
   cout << "Fin du programme..." << endl;
     
