@@ -268,19 +268,27 @@ int main() {
 	glUniformMatrix4fv(PmatrixID, 1, GL_FALSE, value_ptr(projection_matrix));
 	glUniformMatrix4fv(VmatrixID, 1, GL_FALSE, value_ptr(view_matrix));
 	glUniformMatrix4fv(MmatrixID, 1, GL_FALSE, value_ptr(model_matrix));
-
-
+	
+	int hauteur, largeur;
+	glfwGetWindowSize(&largeur,&hauteur);
+	largeur = largeur/2;
+	hauteur = hauteur/2;
+	
 	glBindVertexArray(vaoID); // On active le VAO
-
-
+	
 	//==================================================
 	// Todo : Appeller la fonction de dessin par indexation (a la place de celle ci-dessous)
 	//==================================================
 
 	// on dessine le contenu de tous les VBOs (buffers) associés à ce VAO
 	// i.e: positions et couleurs
-	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0); 
-
+	
+	// On dessine dans 4 fenetres de meme tailles
+	for(int i = 0; i < 4; i++){
+		glViewport(largeur*(i%2),hauteur*(i/2),largeur,hauteur);
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	}
+	
 	glBindVertexArray(0); // On désactive le VAO  
 
 	  
