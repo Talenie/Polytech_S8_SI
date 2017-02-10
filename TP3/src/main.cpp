@@ -168,7 +168,7 @@ int main() {
 	// On autorise et indique a OpenGL comment lire les donnees
 	glVertexAttribPointer(normalePositionID,3,GL_FLOAT,GL_FALSE,0,(void*)0);
 	glEnableVertexAttribArray(normalePositionID);
-
+	
 	//==================================================
 	// Todo 1 : Creation d'un nouveau buffer pour la couleur des sommets
 	//==================================================
@@ -221,8 +221,10 @@ int main() {
 	GLuint MmatrixID = glGetUniformLocation(programID, "ModelMatrix");
 	cout << "MmatrixID = " << MmatrixID << endl;
 
-
-
+	//==================================================
+	// Indice du viewport
+	//==================================================
+	GLuint viewportID = glGetUniformLocation(programID, "viewport");
 
 
 	//==================================================
@@ -285,6 +287,7 @@ int main() {
 	
 	// On dessine dans 4 fenetres de meme tailles
 	for(int i = 0; i < 4; i++){
+		glUniform1i(viewportID,i);
 		glViewport(largeur*(i%2),hauteur*(i/2),largeur,hauteur);
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	}
