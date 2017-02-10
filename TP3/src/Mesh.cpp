@@ -192,6 +192,7 @@ Mesh::Mesh(const char* filename)
 		//normals[i][2] /= -nv[i];
 	}
 
+
 	/*
 
 	// computing colors as normals 
@@ -237,6 +238,53 @@ void Mesh::normalize()
 	        vertices[i][j] = (vertices[i][j] - center[j]) / radius;
 	    }
 	}
+}
+
+#define compMul(v1,v2) (vec3(v1[0]*v2[0],v1[1]*v2[1],v1[2]*v2[2]))
+
+vec3 Mesh::hash33(vec3 p) {
+  vec3 q = vec3(dot(p,vec3(127.1f,311.7f,74.7f)),
+		dot(p,vec3(269.5f,183.3f,246.1f)),
+		dot(p,vec3(113.5f,271.9f,124.6f)));
+  return fract(sin(q)*43758.5453123f)*2.0f-1.0f;
+}
+
+float Mesh::gnoise(vec3 x) {
+  vec3 p = floor(x);
+  vec3 f = fract(x);
+  vec3 m = f*f*(3.0f-2.0f*f);
+  
+  return mix(
+  	     mix(mix(dot(hash33(p+vec3(0.,0.,0.)),f-vec3(0.,0.,0.)),
+  		     dot(hash33(p+vec3(1.,0.,0.)),f-vec3(1.,0.,0.)),m[0]),
+  		 mix(dot(hash33(p+vec3(0.,1.,0.)),f-vec3(0.,1.,0.)),
+  		     dot(hash33(p+vec3(1.,1.,0.)),f-vec3(1.,1.,0.)),m[0]),m[1]),
+  	     mix(mix(dot(hash33(p+vec3(0.,0.,1.)),f-vec3(0.,0.,1.)),
+  		     dot(hash33(p+vec3(1.,0.,1.)),f-vec3(1.,0.,1.)),m[0]),
+  		 mix(dot(hash33(p+vec3(0.,1.,1.)),f-vec3(0.,1.,1.)),
+  		     dot(hash33(p+vec3(1.,1.,1.)),f-vec3(1.,1.,1.)),m[0]),m[1]),m[2])*.5f+.5f;
+}
+
+float Mesh::fnoise(vec3 p,float amplitude,float frequency,float persistence,int nboctaves) {
+  float a = amplitude;
+  float f = frequency;
+  float n = 0.0f;
+  
+  for(int i=0;i<nboctaves;++i) {
+    n = n+a*gnoise(p*f);
+    f = f*2.0f;
+    a = a*persistence;
+  }
+  
+  return n;
+}
+
+
+void Mesh::colorize(float amplitude,float frequency,float persistence,int nboctaves) {
+  for(int i=0; i<vertices.size(); ++i) {
+    float n = fnoise(vertices[i],amplitude,frequency,persistence,nboctaves);
+    colors[i][0] = colors[i][1] = colors[i][2] = n;
+  }
 }
 
 

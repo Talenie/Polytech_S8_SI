@@ -100,6 +100,8 @@ int main() {
 	// Chargement des données du fichier OFF
 	
 	Mesh m("../models/dragon.off"); // Chargement du maillage
+	m.normalize();
+	m.colorize();
 
 	//-------------------------------------------------
 	// Initialisation des arrays de données
@@ -109,7 +111,9 @@ int main() {
 	
 	// Définition d'un tableau de couleurs
 	
-	vector<vec3> colors = m.normals; // Accès au tableau de normales
+	vector<vec3> normales = m.normals; // Accès au tableau de normales
+	
+	vector<vec3> colors = m.colors; // Accés au tableau d'indices
 	
 	
 	// Définition d'un array d'indices (choix des sommets)
@@ -142,7 +146,28 @@ int main() {
 	// On autorise et indique a OpenGL comment lire les donnees
 	glVertexAttribPointer(vertexPositionID,3,GL_FLOAT,GL_FALSE,0,(void*)0);
 	glEnableVertexAttribArray(vertexPositionID);
+	
+	
+	//==================================================
+	// Création d'un VBO pour les normales
+	// avec normaleBufferID pour identifiant
+	//==================================================
+	GLuint normaleBufferID;
+	glGenBuffers(1, &normaleBufferID);
+	cout << "normaleBufferID = " << normaleBufferID << endl;
 
+	// Definition de vertexBufferID comme le buffer courant
+	glBindBuffer(GL_ARRAY_BUFFER, normaleBufferID);
+
+	// Copie des donnees sur la carte graphique (dans vertexBufferID)
+	glBufferData(GL_ARRAY_BUFFER, normales.size() * sizeof(vec3), normales.data(), GL_STATIC_DRAW);
+
+	// Obtention de l'ID de l'attribut "in_position" dans programID
+	GLuint normalePositionID = glGetAttribLocation(programID, "in_normal");
+
+	// On autorise et indique a OpenGL comment lire les donnees
+	glVertexAttribPointer(normalePositionID,3,GL_FLOAT,GL_FALSE,0,(void*)0);
+	glEnableVertexAttribArray(normalePositionID);
 
 	//==================================================
 	// Todo 1 : Creation d'un nouveau buffer pour la couleur des sommets
@@ -290,6 +315,7 @@ int main() {
     
 	glDeleteBuffers(1, &colorBufferID);
 	glDeleteBuffers(1, &indiceBufferID);
+	glDeleteBuffers(1, &normaleBufferID);
 
     
 
