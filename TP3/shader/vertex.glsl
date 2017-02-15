@@ -4,6 +4,7 @@
 // Donnees d'entree
 layout(location=0) in vec3 in_position;
 in vec3 in_color;
+in vec3 in_normal;
 
 
 // Donnees de sortie

@@ -100,6 +100,9 @@ int main() {
 	// Chargement des données du fichier OFF
 	
 	Mesh m("../models/dragon.off"); // Chargement du maillage
+	
+	m.normalize() ; // remet a  l’ echelle / normalize
+	m.colorize(); // mise à jour des couleurs
 
 	//-------------------------------------------------
 	// Initialisation des arrays de données
@@ -109,7 +112,9 @@ int main() {
 	
 	// Définition d'un tableau de couleurs
 	
-	vector<vec3> colors = m.normals; // Accès au tableau de normales
+	vector<vec3> colors = m.colors; // Accès au tableau de couleurs
+	
+	vector<vec3> normals = m.normals; // Accès au tableau de normales
 	
 	
 	// Définition d'un array d'indices (choix des sommets)
@@ -163,7 +168,26 @@ int main() {
 	// Enable pour lecture des données
 	glVertexAttribPointer(vertexColorID, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(vertexColorID);
+	
+	//==================================================
+	// Création d'un nouveau buffer pour les normales
+	//==================================================
 
+	GLuint normalBufferID;
+	glGenBuffers(1, &normalBufferID);
+	
+	// Définition de ce buffer comme buffer courant
+	glBindBuffer(GL_ARRAY_BUFFER, normalBufferID);
+	
+	// Copie des données sur la CG
+	glBufferData(GL_ARRAY_BUFFER, normals.size()*sizeof(vec3), normals.data(), GL_STATIC_DRAW);
+	
+	// Obtention de l'ID de "in_color" dans programID
+	GLuint vertexNormalID = glGetAttribLocation(programID, "in_normal");
+
+	// Enable pour lecture des données
+	glVertexAttribPointer(vertexNormalID, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glEnableVertexAttribArray(vertexNormalID);
 
 	//==================================================
 	// Todo 2 : Creation d'un nouveau buffer pour les indices des triangles
@@ -196,7 +220,9 @@ int main() {
 	GLuint MmatrixID = glGetUniformLocation(programID, "ModelMatrix");
 	cout << "MmatrixID = " << MmatrixID << endl;
 
-
+	//==================================================
+	//===== Récupération de la variable de viewport ====
+	//==================================================
 
 
 
@@ -257,7 +283,32 @@ int main() {
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0); 
 
 	glBindVertexArray(0); // On désactive le VAO  
+	
+	//==================================================
+	// Gestion des viewports et dessin à de nouveaux endroits
+	//==================================================
 
+	glBindVertexArray(vaoID); // On ré-active le VAO
+	
+	int hauteur, largeur;
+    glfwGetWindowSize(&largeur,&hauteur);
+    largeur = largeur/2;
+    hauteur = hauteur/2;
+	
+	// affichage de 4 dragons de même taille
+	for(int i=0; i<4; i++) {
+		glViewport(largeur*(i%2),hauteur*(i/2),largeur,hauteur); // placement du dessin dans la fenêtre
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	}
+
+	/* truc rigolo
+	for(int i=0; i<20; i++) {
+		glViewport(0+500*i%(int)WIDTH,0+500*i%(int)HEIGHT,(int)(WIDTH/(float)i*1.5),(int)(HEIGHT/(float)i*1.5)); // placement du dessin dans la fenêtre
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	}
+	*/
+	
+	glBindVertexArray(0);	
 	  
 	// Echange des zones de dessin buffers
 	glfwSwapBuffers();
@@ -290,9 +341,7 @@ int main() {
     
 	glDeleteBuffers(1, &colorBufferID);
 	glDeleteBuffers(1, &indiceBufferID);
-
-    
-
+	glDeleteBuffers(1, &normalBufferID);
 
 
 

@@ -32,10 +32,16 @@ class Mesh {
   
   vector< vec3 > computeBB() const ;
   void normalize();
+  void colorize(float amplitude=0.5f,float frequency=10.0f,float persistence=0.5f,int nboctaves=4);
   
   // info
   vec3 center;
   float radius;
+
+ private:
+  vec3 hash33(vec3 p);
+  float gnoise(vec3 x);
+  float fnoise(vec3 p,float amplitude,float frequency,float persistence,int nboctaves);
 };
 
 #endif // MESH_H

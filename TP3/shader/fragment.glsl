@@ -2,6 +2,7 @@
 #version 330
 
 in vec4 my_color;
+in uniform int viewport;
 
 out vec4 frag_color;
 
