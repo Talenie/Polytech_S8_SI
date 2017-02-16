@@ -100,8 +100,9 @@ int main() {
 	// Chargement des données du fichier OFF
 	
 	Mesh m("../models/dragon.off"); // Chargement du maillage
-	m.normalize();
-	m.colorize();
+	
+	m.normalize() ; // remet a  l’ echelle / normalize
+	m.colorize(); // mise à jour des couleurs
 
 	//-------------------------------------------------
 	// Initialisation des arrays de données
@@ -111,10 +112,9 @@ int main() {
 	
 	// Définition d'un tableau de couleurs
 	
-	vector<vec3> normales = m.normals; // Accès au tableau de normales
+	vector<vec3> colors = m.colors; // Accès au tableau de couleurs
 	
-	vector<vec3> colors = m.colors; // Accés au tableau d'indices
-	
+	vector<vec3> normals = m.normals; // Accès au tableau de normales
 	
 	// Définition d'un array d'indices (choix des sommets)
 	
@@ -146,29 +146,7 @@ int main() {
 	// On autorise et indique a OpenGL comment lire les donnees
 	glVertexAttribPointer(vertexPositionID,3,GL_FLOAT,GL_FALSE,0,(void*)0);
 	glEnableVertexAttribArray(vertexPositionID);
-	
-	
-	//==================================================
-	// Création d'un VBO pour les normales
-	// avec normaleBufferID pour identifiant
-	//==================================================
-	GLuint normaleBufferID;
-	glGenBuffers(1, &normaleBufferID);
-	cout << "normaleBufferID = " << normaleBufferID << endl;
-
-	// Definition de vertexBufferID comme le buffer courant
-	glBindBuffer(GL_ARRAY_BUFFER, normaleBufferID);
-
-	// Copie des donnees sur la carte graphique (dans vertexBufferID)
-	glBufferData(GL_ARRAY_BUFFER, normales.size() * sizeof(vec3), normales.data(), GL_STATIC_DRAW);
-
-	// Obtention de l'ID de l'attribut "in_position" dans programID
-	GLuint normalePositionID = glGetAttribLocation(programID, "in_normal");
-
-	// On autorise et indique a OpenGL comment lire les donnees
-	glVertexAttribPointer(normalePositionID,3,GL_FLOAT,GL_FALSE,0,(void*)0);
-	glEnableVertexAttribArray(normalePositionID);
-	
+		
 	//==================================================
 	// Todo 1 : Creation d'un nouveau buffer pour la couleur des sommets
 	//==================================================
@@ -188,7 +166,26 @@ int main() {
 	// Enable pour lecture des données
 	glVertexAttribPointer(vertexColorID, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 	glEnableVertexAttribArray(vertexColorID);
+	
+	//==================================================
+	// Création d'un nouveau buffer pour les normales
+	//==================================================
 
+	GLuint normalBufferID;
+	glGenBuffers(1, &normalBufferID);
+	
+	// Définition de ce buffer comme buffer courant
+	glBindBuffer(GL_ARRAY_BUFFER, normalBufferID);
+	
+	// Copie des données sur la CG
+	glBufferData(GL_ARRAY_BUFFER, normals.size()*sizeof(vec3), normals.data(), GL_STATIC_DRAW);
+	
+	// Obtention de l'ID de "in_color" dans programID
+	GLuint vertexNormalID = glGetAttribLocation(programID, "in_normal");
+
+	// Enable pour lecture des données
+	glVertexAttribPointer(vertexNormalID, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+	glEnableVertexAttribArray(vertexNormalID);
 
 	//==================================================
 	// Todo 2 : Creation d'un nouveau buffer pour les indices des triangles
@@ -292,8 +289,14 @@ int main() {
 		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	}
 	
-	glBindVertexArray(0); // On désactive le VAO  
-
+	/* truc rigolo
+	for(int i=0; i<20; i++) {
+		glViewport(0+500*i%(int)WIDTH,0+500*i%(int)HEIGHT,(int)(WIDTH/(float)i*1.5),(int)(HEIGHT/(float)i*1.5)); // placement du dessin dans la fenêtre
+		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
+	}
+	*/
+	
+	glBindVertexArray(0);	
 	  
 	// Echange des zones de dessin buffers
 	glfwSwapBuffers();
@@ -326,10 +329,7 @@ int main() {
     
 	glDeleteBuffers(1, &colorBufferID);
 	glDeleteBuffers(1, &indiceBufferID);
-	glDeleteBuffers(1, &normaleBufferID);
-
-    
-
+	glDeleteBuffers(1, &normalBufferID);
 
 
 

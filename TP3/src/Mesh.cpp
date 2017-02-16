@@ -286,8 +286,3 @@ void Mesh::colorize(float amplitude,float frequency,float persistence,int nbocta
     colors[i][0] = colors[i][1] = colors[i][2] = n;
   }
 }
-
-
-
-
-
