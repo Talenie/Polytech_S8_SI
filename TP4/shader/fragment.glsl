@@ -1,9 +1,9 @@
 // Version d'OpenGL
 #version 330
 
-in vec3 ambiant;
-in vec3 diffus;
-in vec3 speculaire;
+flat in vec3 ambiant;
+flat in vec3 diffus;
+flat in vec3 speculaire;
 
 out vec4 frag_color;
 
