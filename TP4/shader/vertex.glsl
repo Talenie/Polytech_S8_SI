@@ -7,7 +7,9 @@ in vec3 in_color;
 in vec3 in_normal;
 
 // Donnees de sortie
-out vec4 my_color;
+out vec3 ambiant;
+out vec3 diffus;
+out vec3 speculaire;
 
 // Parametres
 uniform mat4 ModelMatrix;
@@ -40,9 +42,8 @@ void main() {
   int s = 4;
   
   vec3 e = normalize((inverse(ViewMatrix * ModelMatrix) * vec4(0,0,1.0,0)).xyz);
-  
-  vec3 Lf = ra*la + rd*ld*max(-dot(normale,l),0) + rs*ls*pow(max(dot(e,r),0),s);
-  
-
-  my_color = vec4(Lf,1.0);
+    
+  ambiant = ra*la;
+  diffus = rd*ld*max(-dot(normale,l),0);
+  speculaire = rs*ls*pow(max(dot(e,r),0),s);
 }
