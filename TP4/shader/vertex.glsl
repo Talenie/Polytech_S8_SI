@@ -7,10 +7,18 @@ in vec3 in_color;
 in vec3 in_normal;
 
 // Donnees de sortie
+/* pour le shading de phong non flat
+*/
+out vec3 ambiant;
+out vec3 diffus;
+out vec3 speculaire;
+
+/* Flat shading
 flat out vec3 ambiant;
 flat out vec3 diffus;
 flat out vec3 speculaire;
-
+ */
+ 
 // Parametres
 uniform mat4 ModelMatrix;
 uniform mat4 ViewMatrix;
@@ -25,18 +33,18 @@ void main() {
   vec3 normale = (transpose(inverse(ModelMatrix)) * vec4(in_normal,0.0)).xyz;
   
   float ra,rd,rs;
-  ra = 0.1;
-  rd = 0.5;
+  ra = 0.3;
+  rd = 0.9;
   rs = 1.0;
   
   vec3 la,ld,ls;
   
-  la = vec3(0,0.2,1.0);
-  ld = vec3(0.1,0.1,1.0);
+  la = vec3(1.0,0.6,0.2);
+  ld = vec3(1.0,1.0,0.1);
   ls = vec3(1.0,1.0,1.0);
   
   vec3 l,r;
-  l = normalize(vec3(0.5,1.0,0.5));
+  l = normalize(vec3(0.8,-1.0,0.0));
   r = normalize(reflect(l, normale));
   
   int s = 16;
