@@ -29,5 +29,5 @@ void main()
 	my_color = vec4(in_color, 1.0);
     my_position = vec4(in_position, 1.0);
 	my_normale = vec4(in_normal, 1.0);
-	my_prof = vec4(z,z,z, 1.0);
+	my_prof = vec4(z/255,z,z, 1.0);
 }

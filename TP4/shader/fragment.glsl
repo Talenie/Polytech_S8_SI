@@ -21,16 +21,14 @@ void main() {
   // Affectation de la couleur du fragment
   vec3 my_color = ambiant + diffus + speculaire;
   
-  // Toon shading
-  float choix = 5;
-  float x,y,z;
-  
-  for(float i = 1; i <= choix; i++){
-	if(my_color.x < i/choix && my_color.x >= (i-1)/choix) x = (i-1)/choix;
-	if(my_color.y < i/choix && my_color.y >= (i-1)/choix) y = (i-1)/choix;
-	if(my_color.z < i/choix && my_color.z >= (i-1)/choix) z = (i-1)/choix;
+
+  if(diffus.x	 > 0.04) {
+  	my_color = vec3(1.0,1.0,1.0);
+  } else {
+  	my_color = vec3(0.0,0.0,0.0);
   }
   
-  frag_color = vec4(x,y,z,1.0);
+  frag_color = vec4(my_color,1.0);
+
   
 }
