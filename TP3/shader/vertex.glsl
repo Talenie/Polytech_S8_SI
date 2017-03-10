@@ -24,7 +24,7 @@ void main()
 	// gl_Position est definit par defaut dans GLSL
 	gl_Position = ProjectionMatrix * ViewMatrix * ModelMatrix * vec4(in_position, 1.0);
 	
-	float z = (ViewMatrix * ModelMatrix * vec4(in_position, 1.0)).z;
+	float z = -(ViewMatrix * ModelMatrix * vec4(in_position, 1.0)).z -1.5;
 	
 	my_color = vec4(in_color, 1.0);
     my_position = vec4(in_position, 1.0);
