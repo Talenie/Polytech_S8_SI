@@ -39,18 +39,24 @@ void main() {
   
   vec3 la,ld,ls;
   
-  la = vec3(1.0,0.6,0.2);
-  ld = vec3(1.0,1.0,0.1);
+  la = in_color;
+  ld = in_color;
+  
+  //la = vec3(1.0,0.6,0.2);
+  //ld = vec3(1.0,1.0,0.1);
   ls = vec3(1.0,1.0,1.0);
   
-  vec3 l,r;
-  l = normalize(vec3(0.8,-1.0,0.0));
-  r = normalize(reflect(l, normale));
   
   int s = 16;
   
   vec3 e = normalize((inverse(ViewMatrix * ModelMatrix) * vec4(0,0,1.0,0)).xyz);
-    
+  
+  vec3 l,r;
+   
+  // Lumière venant de la caméra
+  l = normalize(-e);
+  r = normalize(reflect(l, normale));
+  
   ambiant = ra*la;
   diffus = rd*ld*max(-dot(normale,l),0);
   speculaire = rs*ls*pow(max(dot(e,r),0),s);
