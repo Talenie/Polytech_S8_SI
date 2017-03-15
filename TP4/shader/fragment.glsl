@@ -31,8 +31,8 @@ void main() {
   
   vec3 la,ld,ls;
     
-  la = vec3(1.0,0.6,0.2);
-  ld = vec3(1.0,1.0,0.1);
+  la = vec3(1.0,1.0,0.2);
+  ld = vec3(1.0,0.8,0.2);
   ls = vec3(1.0,1.0,1.0);
   
   
@@ -54,6 +54,7 @@ void main() {
 
   // Affectation de la couleur du fragment
   vec3 my_color = ambiant + diffus + speculaire;
+<<<<<<< HEAD
 
 	/**
 	 Gestion du toon-shading
@@ -66,6 +67,28 @@ void main() {
 	// Application de la nuance à la couleur initiale
 	my_color = my_color * shade;
 
+=======
+    
+  float intensity = (diffus.x+diffus.y+diffus.z);
+  float niveaux = 12.0;
+  
+  for(float i=niveaux; i>0.0; i--) {
+  	if(intensity <= 3.0/i) {
+  		my_color.x = my_color.x/i;
+  		my_color.y = my_color.y/i;
+  		my_color.z = my_color.z/i;
+  	}
+  }
+/*
+  if(intensity > 0.8) {
+  	my_color = vec3(1.0,1.0,1.0);
+  } else if(intensity > 0.2) {
+  	my_color = vec3(0.5,0.5,0.5);
+  } else {
+  	my_color = vec3(0.0,0.0,0.0);
+  }
+*/
+>>>>>>> 04879626efac60c497e3b0b9bdb44f6335eee0a1
   frag_color = vec4(my_color,1.0);
 
   
