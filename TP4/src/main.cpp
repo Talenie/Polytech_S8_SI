@@ -98,7 +98,7 @@ int main() {
 
   //-------------------------------------------------
   // Initialisation du maillage
-  string file_name("../models/bunny.off");
+  string file_name("../models/blob.off");
   cout << "chargement de '" << file_name << "'..." << endl;
   Mesh m(file_name.c_str());
   m.normalize();
