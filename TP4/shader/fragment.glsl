@@ -26,7 +26,7 @@ void main() {
   vec3 normale = normalize(in_normale);
   float ra,rd,rs;
   ra = 0.3;
-  rd = 0.9;
+  rd = 0.8;
   rs = 1.0;
   
   vec3 la,ld,ls;
@@ -58,18 +58,13 @@ void main() {
 	/**
 	 Gestion du toon-shading
 	*/
-  /*
-  float intensity = (diffus.x+diffus.y+diffus.z)/3.0;
-  float niveaux = 4;
-  
-  for(float i=niveaux; i>0.0; i--) {
-  	if(intensity <= 1.0/i) {
-  		my_color.x = my_color.x/i;
-  		my_color.y = my_color.y/i;
-  		my_color.z = my_color.z/i;
-  	}
-  }
-  */
+	float levels = 5;
+	// Calcul de l’intensité de couleur en chaque sommet
+	float intensity = (my_color.x+my_color.y+my_color.z)/3.0;
+	// Application d’une nuance en fonction des niveaux de couleur et de l’intensité précédemment calculée
+	float shade = ceil(intensity * levels)/levels;
+	// Application de la nuance à la couleur initiale
+	my_color = my_color * shade;
 
   frag_color = vec4(my_color,1.0);
 
