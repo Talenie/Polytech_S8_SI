@@ -12,10 +12,11 @@ in vec3 in_normal;
 out vec3 in_normale;
 out vec3 lumiere;
 
-/* Flat shading
-flat out vec3 normale;
+/* Flat shading */
+/*
+flat out vec3 in_normale;
 flat out vec3 lumiere;
- */
+*/
  
 // Parametres
 uniform mat4 ModelMatrix;
