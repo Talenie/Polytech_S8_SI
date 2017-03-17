@@ -2,6 +2,7 @@
 #version 330
 
 in vec2 coords;
+uniform float Time;
 
 out vec4 frag_color;
 
@@ -25,14 +26,14 @@ vec2 pow(in vec2 c, in int p) {
 
 // Calcule la couleur à  partir d'un entier.
 vec4 colormap(in float n){
-	return vec4(1-n,1-n/2.0,sin(n),1.0);
+	return vec4(1-n,1-n/1.5,cos(n),1.0);
 }
 
 float mandelbrot(in vec2 c, in int N){
 	float S = 1000.;
 	vec2 z = vec2(0.0);
 	for(int i = 0; i < N; ++i){
-		z = pow(z,4) + c;
+		z = pow(z,2+int(Time)) + c;
 		if(length(z) > S){
 			return float(i)/float(N-1);
 		}

@@ -180,7 +180,9 @@ int main() {
     glUseProgram(programID);
 
     // TODO: Transmission des variables uniform aux shaders
-
+    cur_time = glfwGetTime() - init_time;
+    GLuint timeID = glGetUniformLocation(programID, "Time");
+    glUniform1f(timeID, cur_time);
     
     // set viewport, enable VAO and draw 
     glViewport(0,0,w,h);
