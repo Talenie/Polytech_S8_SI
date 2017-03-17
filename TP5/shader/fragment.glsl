@@ -5,8 +5,47 @@ in vec2 coords;
 
 out vec4 frag_color;
 
+
+vec2 mult(in vec2 a, in vec2 b){
+	vec2 res;
+	res.x = a.x*b.x - a.y*b.y;
+	res.y = a.x*b.y + a.y*b.x;
+	return res;
+}
+
+// Calcule le carré d'un nombre complexe
+vec2 pow(in vec2 c, in int p) {
+	vec2 res = c;
+	for( int i = 1; i < p; i++){
+		res = mult(res,c);
+	}
+	return res;
+}
+
+
+// Calcule la couleur à  partir d'un entier.
+vec4 colormap(in float n){
+	return vec4(1-n,1-n/2.0,sin(n),1.0);
+}
+
+float mandelbrot(in vec2 c, in int N){
+	float S = 1000.;
+	vec2 z = vec2(0.0);
+	for(int i = 0; i < N; ++i){
+		z = pow(z,4) + c;
+		if(length(z) > S){
+			return float(i)/float(N-1);
+		}
+	}
+	return 1.0;
+}
+
 // Fonction appellee pour chaque fragment
 void main() {
   // Affichage de la coordonnee du fragment/pixel
-  frag_color = vec4(coords,0.5,1.0);
+  
+  float n = mandelbrot(coords,30);
+  frag_color = colormap(n);
+  
+  
 }
