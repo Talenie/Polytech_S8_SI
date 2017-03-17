@@ -58,6 +58,7 @@ void main() {
 	/**
 	 Gestion du toon-shading
 	*/
+	/*
 	float levels = 5;
 	// Calcul de l’intensité de couleur en chaque sommet
 	float intensity = (my_color.x+my_color.y+my_color.z)/3.0;
@@ -65,6 +66,7 @@ void main() {
 	float shade = ceil(intensity * levels)/levels;
 	// Application de la nuance à la couleur initiale
 	my_color = my_color * shade;
+	*/
 
   frag_color = vec4(my_color,1.0);
 
