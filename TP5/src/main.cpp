@@ -263,4 +263,16 @@ void controle_camera(){
 		p0x = p0x+0.02;
 		p1x = p1x+0.02;
 	}
+	if (glfwGetKey( GLFW_KEY_S ) == GLFW_PRESS) {
+		p0x = p0x + 0.02;
+		p0y = p0y - 0.02;
+		p1x = p1x - 0.02;
+		p1y = p1y + 0.02;
+	}
+	if (glfwGetKey( GLFW_KEY_Z ) == GLFW_PRESS) {
+		p0x = p0x - 0.02;
+		p0y = p0y + 0.02;
+		p1x = p1x + 0.02;
+		p1y = p1y - 0.02;
+	}
 }
