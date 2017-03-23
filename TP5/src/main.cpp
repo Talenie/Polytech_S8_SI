@@ -247,12 +247,20 @@ int main() {
 }
 
 void controle_camera(){	
+	if (glfwGetKey( GLFW_KEY_UP ) == GLFW_PRESS) {
+		p0y = p0y-0.02;
+		p1y = p1y-0.02;
+	}
+	if (glfwGetKey( GLFW_KEY_DOWN ) == GLFW_PRESS) {
+		p0y = p0y+0.02;
+		p1y = p1y+0.02;
+	}
 	if (glfwGetKey( GLFW_KEY_RIGHT ) == GLFW_PRESS) {
-		p0x = p0x+0.1;
-		p1x = p1x+0.1;
+		p0x = p0x-0.02;
+		p1x = p1x-0.02;
 	}
 	if (glfwGetKey( GLFW_KEY_LEFT ) == GLFW_PRESS) {
-		p0x = p0x-0.1;
-		p1x = p1x-0.1;
+		p0x = p0x+0.02;
+		p1x = p1x+0.02;
 	}
 }

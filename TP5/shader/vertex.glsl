@@ -14,5 +14,5 @@ out vec2 coords;
 void main() {
   gl_Position = vec4(in_position, 1.0);
   
-  coords = vec2(in_position.x-p0x+p1x,in_position.y-p0y+p1y)*0.5+0.5; // remap [-1,1] to [0,1]
+  coords = vec2((in_position.x-p0x)/(p1x-p0x),(in_position.y-p1y)/(p0y-p1y)); // remap [-1,1] to [0,1]
 }
