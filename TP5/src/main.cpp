@@ -19,7 +19,16 @@
 using namespace glm;
 using namespace std;
 
+float p0x, p0y, p1x, p1y;
+
+void controle_camera();
+
 int main() {
+  
+  p0x = -1.0;
+  p0y = 1.0;
+  p1x = 1.0;
+  p1y = -1.0; 
   
   cout << "Debut du programme..." << endl;
 
@@ -137,6 +146,13 @@ int main() {
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices),indices, GL_STATIC_DRAW);
 
   glBindVertexArray(0); // Désactiver le VAO
+  
+  
+  GLuint timeID = glGetUniformLocation(programID, "time");
+  GLuint p0xID = glGetUniformLocation(programID, "p0x");
+  GLuint p0yID = glGetUniformLocation(programID, "p0y");
+  GLuint p1xID = glGetUniformLocation(programID, "p1x");
+  GLuint p1yID = glGetUniformLocation(programID, "p1y");
 
 
   //==================================================
@@ -170,7 +186,7 @@ int main() {
     glfwSetWindowTitle(title);
 
     // TODO: Interaction avec la camera 
-	
+	controle_camera();
 
     //==================================================
     //===================== Dessin =====================
@@ -180,7 +196,14 @@ int main() {
     glUseProgram(programID);
 
     // TODO: Transmission des variables uniform aux shaders
-
+    cur_time = glfwGetTime() - init_time;
+    glUniform1f(timeID, cur_time);
+    
+    // Transmission des points
+    glUniform1f(p0xID,p0x);
+    glUniform1f(p0yID,p0y);
+    glUniform1f(p1xID,p1x);
+    glUniform1f(p1yID,p1y);
     
     // set viewport, enable VAO and draw 
     glViewport(0,0,w,h);
@@ -223,4 +246,21 @@ int main() {
   return EXIT_SUCCESS;
 }
 
-
+void controle_camera(){	
+	if (glfwGetKey( GLFW_KEY_UP ) == GLFW_PRESS) {
+		p0y = p0y-0.02;
+		p1y = p1y-0.02;
+	}
+	if (glfwGetKey( GLFW_KEY_DOWN ) == GLFW_PRESS) {
+		p0y = p0y+0.02;
+		p1y = p1y+0.02;
+	}
+	if (glfwGetKey( GLFW_KEY_RIGHT ) == GLFW_PRESS) {
+		p0x = p0x-0.02;
+		p1x = p1x-0.02;
+	}
+	if (glfwGetKey( GLFW_KEY_LEFT ) == GLFW_PRESS) {
+		p0x = p0x+0.02;
+		p1x = p1x+0.02;
+	}
+}
