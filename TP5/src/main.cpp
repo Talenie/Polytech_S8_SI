@@ -137,6 +137,9 @@ int main() {
   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices),indices, GL_STATIC_DRAW);
 
   glBindVertexArray(0); // Désactiver le VAO
+  
+  
+  GLuint timeID = glGetUniformLocation(programID, "time");
 
 
   //==================================================
@@ -181,7 +184,6 @@ int main() {
 
     // TODO: Transmission des variables uniform aux shaders
     cur_time = glfwGetTime() - init_time;
-    GLuint timeID = glGetUniformLocation(programID, "Time");
     glUniform1f(timeID, cur_time);
     
     // set viewport, enable VAO and draw 
