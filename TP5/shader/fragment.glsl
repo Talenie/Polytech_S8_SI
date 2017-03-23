@@ -27,9 +27,18 @@ vec2 pow(in vec2 c, in int p) {
 // Calcule la couleur à  partir d'un entier.
 vec4 colormap(in float n){
 	float r,g,b;
-	r = 1-n;
-	g = 1-n;
-	b = cos(n);
+	int div = 10;
+	
+	if(int(time/div)%2==1){
+		b = n*mod(time/div,1);
+		g = b;
+	} else {
+		b = n - mod(time/div,1);
+		g = b;
+	}
+	r = 0;
+	
+	
 	return vec4(r,g,b,1.0);
 }
 
@@ -45,7 +54,7 @@ float mandelbrot(in vec2 c, in int N){
 	}
 	
 	for(int i = 0; i < N; ++i){
-		z = pow(z,5) + c;
+		z = pow(z,3) + c;
 		if(length(z) > S){
 			return float(i)/float(N-1);
 		}
