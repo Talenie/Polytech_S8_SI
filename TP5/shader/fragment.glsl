@@ -47,11 +47,12 @@ float mandelbrot(in vec2 c, in int N){
 	int div = 10;
 	vec2 z = vec2(0.0);
 	
+	/*
 	if(int(mod(time/div,2))==1){
 		z = vec2(mod(time/div,1),1-mod(time/div,1));
 	} else {
 		z = vec2(1-mod(time/div,1),mod(time/div,1));
-	}
+	}*/
 	
 	for(int i = 0; i < N; ++i){
 		z = pow(z,3) + c;
