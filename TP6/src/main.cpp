@@ -210,7 +210,7 @@ int main() {
   // TODO : créer la texture 
   // TODO : recuperer l'identifiant de "texSampler" dans le fragment shader 
   //==================================================
-  QImage img("../textures/planet_.jpg");
+  QImage img("../textures/chessMulti.jpg");
   img = QGLWidget::convertToGLFormat(img);
   if(img.isNull()) {
 		std::cerr << "Error Loading Texture !" << std::endl;
