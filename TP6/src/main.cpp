@@ -210,8 +210,30 @@ int main() {
   // TODO : créer la texture 
   // TODO : recuperer l'identifiant de "texSampler" dans le fragment shader 
   //==================================================
-  
+  QImage img("../textures/planet_.jpg");
+  img = QGLWidget::convertToGLFormat(img);
+  if(img.isNull()) {
+		std::cerr << "Error Loading Texture !" << std::endl;
+		exit(EXIT_FAILURE);
+	}
+	GLuint textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  glTexImage2D(GL_TEXTURE_2D,
+		0,
+		GL_RGBA32F,
+		img.width(),
+		img.height(),
+		0,
+		GL_RGBA,
+		GL_UNSIGNED_BYTE,
+		(const GLvoid*)img.bits());
 
+	GLuint texSamplerID = glGetUniformLocation( programID, "texSampler" );
 
   //==================================================
   //=========== Debut des choses serieuses ===========
@@ -263,6 +285,10 @@ int main() {
     // Note: la texture est déjà sur GPU, il suffit de lier la texture
     // a une unité, puis de spécifier cette unité au shader 
     //==================================================
+    glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		glUniform1i(texSamplerID, 0);
+	
     
     
     // set viewport, enable VAO and draw 
@@ -300,6 +326,8 @@ int main() {
   glDeleteBuffers(1, &normalBufferID);
   glDeleteBuffers(1, &texcoordBufferID);
   glDeleteBuffers(1, &indiceBufferID);
+  
+  glDeleteTextures(1, &textureID);
 
 
   cout << "Fin du programme..." << endl;
