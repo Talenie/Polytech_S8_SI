@@ -210,7 +210,7 @@ int main() {
   // TODO : créer la texture 
   // TODO : recuperer l'identifiant de "texSampler" dans le fragment shader 
   //==================================================
-  QImage img("../textures/crate.jpg");
+  QImage img("../textures/dice_texture_uv_map.jpg");
   img = QGLWidget::convertToGLFormat(img);
   if(img.isNull()) {
 		std::cerr << "Error Loading Texture !" << std::endl;
@@ -401,12 +401,31 @@ void create_cube(Mesh* output)
     output->normals.push_back(vec3(0,  1, 0));
                         
     // TODO : definir les coordonnées de texture des sommets du cube
-	for( int i = 0; i < 8; i++){
-		output->texCoord.push_back(vec2(0,0));
-		output->texCoord.push_back(vec2(1,0));
-		output->texCoord.push_back(vec2(1,1));
-		output->texCoord.push_back(vec2(0,1));
-	}
+  	/*
+    for( int i = 0; i < 8; i++){
+			output->texCoord.push_back(vec2(0,0));
+			output->texCoord.push_back(vec2(1,0));
+			output->texCoord.push_back(vec2(1,1));
+			output->texCoord.push_back(vec2(0,1));
+		}
+		*/
+		
+		output->texCoord.push_back(vec2(0.5,0));
+		output->texCoord.push_back(vec2(0.75,0));
+		output->texCoord.push_back(vec2(0.75,1./3.));
+		output->texCoord.push_back(vec2(0.5,1./3.));
+		
+		for( int i = 0.; i <= 3.; i++){
+			output->texCoord.push_back(vec2(i/4., 1./3.));
+			output->texCoord.push_back(vec2((i+1.)/4., 1./3.));
+			output->texCoord.push_back(vec2((i+1.)/4., 2./3.));
+			output->texCoord.push_back(vec2(i/4., 2./3.));
+		}
+
+		output->texCoord.push_back(vec2(0.5,2./3.));
+		output->texCoord.push_back(vec2(0.75,2./3.));
+		output->texCoord.push_back(vec2(0.75,1));
+		output->texCoord.push_back(vec2(0.5,1));
 
 
     output->faces.push_back(0);
