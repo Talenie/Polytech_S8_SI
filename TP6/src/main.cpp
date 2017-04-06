@@ -212,10 +212,12 @@ int main() {
   //==================================================
   QImage img("../textures/dice_texture_uv_map.jpg");
   img = QGLWidget::convertToGLFormat(img);
+  
   if(img.isNull()) {
 		std::cerr << "Error Loading Texture !" << std::endl;
 		exit(EXIT_FAILURE);
 	}
+	
 	GLuint textureID;
 	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
@@ -234,7 +236,7 @@ int main() {
 		(const GLvoid*)img.bits());
 
 	GLuint texSamplerID = glGetUniformLocation( programID, "texSampler" );
-
+	
   //==================================================
   //=========== Debut des choses serieuses ===========
   //==================================================
@@ -288,7 +290,6 @@ int main() {
     glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		glUniform1i(texSamplerID, 0);
-	
     
     
     // set viewport, enable VAO and draw 
