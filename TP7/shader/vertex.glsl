@@ -27,5 +27,6 @@ void main() {
   view_dir = (inverse(ViewMatrix) * vec4(0.0, 0.0, -1.0, 0.0)).xyz;
   view_dir = normalize(view_dir);
   
-  vert_texCoord = in_texcoord;
+  //vert_texCoord = vec2(3.0,4.0)*in_texcoord - vec2(1.0,1.0);
+  vert_texCoord = in_texcoord*4.;
 }

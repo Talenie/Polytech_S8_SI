@@ -9,6 +9,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <unistd.h>
+
 #include <GLFW_define.h>
 #include <Mesh.h>
 #include <QGLWidget>
@@ -20,7 +22,10 @@
 using namespace glm;
 using namespace std;
 
+bool magFilterLinear = true;
+
 void view_control(mat4& view_matrix, float dx);
+void texture_control();
 void create_cube(Mesh* output);
 void create_sphere(Mesh* output);
 
@@ -225,9 +230,14 @@ int main() {
   //==================================================
   // TODO: modifier les parametres de texture
   //==================================================
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
+  
+  glGenerateMipmap(GL_TEXTURE_2D);
+  
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+  
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
   GLuint texSamplerID = glGetUniformLocation( programID, "texSampler" );
   glUniform1i(texSamplerID, 0);
@@ -237,6 +247,11 @@ int main() {
   //==================================================
   //=========== Debut des choses serieuses ===========
   //==================================================
+
+	cout << "Indications de contrôle (rester appuyé) :" << endl;
+	cout << "F1 ou F2 pour contrôler le mode de traitement des coordonnées de textures" << endl;
+	cout << "F3, F4 pour changer le mode de filtrage" << endl;
+	cout << "F5, F6 et F7 pour activer différentes versions de MipMapping" << endl;
 
   cout << "Debut de la boucle principale..." << endl;
 
@@ -265,6 +280,7 @@ int main() {
     glfwSetWindowTitle(title);
 
     view_control(view_matrix, speed * delta_time);
+    texture_control();
 
 
     //==================================================
@@ -599,6 +615,44 @@ void view_control(mat4& view_matrix, float dx) {
     vec4 axis = vec4(0.0, 1.0, 0.0, 0.0) * (-dx);
     axis = inverse(view_matrix) * axis;
     view_matrix = translate(view_matrix, vec3(axis));
+  }
+}
+
+void texture_control() {
+	  
+  if(glfwGetKey( GLFW_KEY_F1) == GLFW_PRESS) {
+  	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+  	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+  } else {
+  	if(glfwGetKey( GLFW_KEY_F2) == GLFW_PRESS) {
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+  	} else {  	
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  	}
+  }
+  
+  if (glfwGetKey( GLFW_KEY_F3 ) == GLFW_PRESS) {
+  	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);  
+  }	else {
+  	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+  }
+  
+  if (glfwGetKey( GLFW_KEY_F4 ) == GLFW_PRESS) {
+  	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); 
+  }	else {
+  	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST); 
+  }
+  
+  if (glfwGetKey( GLFW_KEY_F5 ) == GLFW_PRESS) {
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+  } else if (glfwGetKey( GLFW_KEY_F6 ) == GLFW_PRESS) {
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+  } else if (glfwGetKey( GLFW_KEY_F7 ) == GLFW_PRESS) {
+  	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+  } else {
+  	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
   }
 }
 
