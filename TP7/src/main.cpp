@@ -208,7 +208,7 @@ int main() {
   //==================================================
   // Initialisation de la texture 
   //==================================================
-  QImage img = QGLWidget::convertToGLFormat(QImage("../textures/crate.jpg"));
+  QImage img = QGLWidget::convertToGLFormat(QImage("../textures/perso.jpg"));
   if(img.isNull()) {
     std::cerr << "Echec de chargement de la texture !" << std::endl;
     exit(EXIT_FAILURE);
@@ -225,8 +225,14 @@ int main() {
   //==================================================
   // TODO: modifier les parametres de texture
   //==================================================
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+  
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+  //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  
+  glGenerateMipmap(GL_TEXTURE_2D);
+  
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 
   GLuint texSamplerID = glGetUniformLocation( programID, "texSampler" );
