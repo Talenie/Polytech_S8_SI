@@ -9,6 +9,7 @@ in vec3 view_dir;
 out vec4 frag_color;
 
 uniform sampler2D texSampler;
+uniform sampler2D texLight;
 
 // Fonction appellee pour chaque fragment
 void main() {
@@ -18,6 +19,9 @@ void main() {
   ra = 0.3;
   rd = 1.0;
   rs = 0.6;
+  
+  float t = dot(-light_dir, normal);
+  t = max(t, 0.2);
   
   
   vec3 la,ld,ls;
@@ -40,7 +44,5 @@ void main() {
   vec3 my_color = ambiant + diffus + speculaire;
   
   frag_color = vec4(my_color, 1.0);
-  
-  // TODO: récupérer la couleur correspondant à ce fragment dans la texture
-  //frag_color = texture( texSampler, vert_texCoord);
+  frag_color = texture( texSampler, vert_texCoord) * t ;
 }
