@@ -90,7 +90,7 @@ int main() {
 
    //-------------------------------------------------
   // Initialisation du maillage
-  string file_name("../models/armadillo.off");
+  string file_name("../models/dragon.off");
   cout << "chargement de '" << file_name << "'..." << endl;
   Mesh m(file_name.c_str());
   m.normalize();
